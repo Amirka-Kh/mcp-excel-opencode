@@ -1179,11 +1179,12 @@ class MCPExcelServer:
                     arguments = json.loads(arguments)
 
                 result = []
-                for f in filters['filters']:
+                for f in arguments.get('filters', []):
                     if isinstance(f, str):
                         f = json.loads(f)
                     result.append(f)
-                filters['filters'] = result
+                if 'filters' in arguments:
+                    arguments['filters'] = result
 
                 if name == "inspect_file":
                     request = InspectFileRequest(**arguments)
